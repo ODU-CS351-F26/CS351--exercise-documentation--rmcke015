@@ -17,6 +17,7 @@ java {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     testImplementation 'org.hamcrest:hamcrest-library:2.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.withType(Test) {
@@ -31,3 +32,34 @@ application { //Allows  ./gradlew run --args=path-to-test-data
     mainClass = 'edu.odu.cs.MostCommonWords'
 }
 
+task copyHtml(type: Copy) {
+    from 'src/main/html'
+    into 'build/reports'
+}
+
+task copyDocs(type: Copy) {
+    dependsOn javadoc
+    from 'build/docs'
+    into 'build/reports'
+}
+
+task reports {
+    dependsOn build
+    dependsOn copyHtml
+    dependsOn copyDocs
+}
+
+gitPublish {
+    repoUri = 'git@github.com:ODU-CS351-F26/CS351--exercise-documentation--rmcke015.git'
+    branch = 'gh-pages'
+
+    contents {
+        from 'build/reports'
+    }
+}
+
+gitPublishCopy.dependsOn reports
+
+task deployReports {
+    dependsOn gitPublishPush
+}
