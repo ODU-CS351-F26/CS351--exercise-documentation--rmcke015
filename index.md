@@ -1,7 +1,6 @@
 # Project Reports
 
-Rajwaun McKenzie
+Your Name
 
-* [Tests](./tests/test/)
-* [JavaDoc](./javadoc/)
-
+* [Tests](./reports/tests/test/)
+* [JavaDoc](./reports/javadoc/)
